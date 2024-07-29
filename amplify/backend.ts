@@ -1,8 +1,18 @@
 import { defineBackend } from "@aws-amplify/backend";
 import { auth } from "./auth/resource";
 import { data } from "./data/resource";
+import {
+  LambdaRestApiIntegration,
+  uploadToS3Function,
+} from "./microservices/resource";
+import { storage } from "./storage/resource";
 
-defineBackend({
+export const backend = defineBackend({
   auth,
-  data,
+  uploadToS3Function,
+  storage,
 });
+
+export type BackendType = typeof backend;
+
+new LambdaRestApiIntegration(backend, "LambdaIntergationStack");
