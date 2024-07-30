@@ -1,0 +1,53 @@
+.rootdiv {
+  background-color: mediumspringgreen;
+  height: 100vh;
+  padding-top: 1px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  text-align: center;
+  margin-top: 150px;
+}
+
+.subheader {
+  text-align: center;
+}
+
+.logout {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background-color: #04aa6d; /* Green */
+  border: solid black;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.logout:hover {
+  background-color: blue;
+  color: red;
+  cursor: pointer;
+}
+
+.enter {
+  background-color: #045aaa; /* Green */
+  border: solid black;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.enter:hover {
+  background-color: rgb(183, 0, 255);
+  cursor: pointer;
+}
