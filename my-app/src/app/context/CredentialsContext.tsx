@@ -52,7 +52,7 @@ export const CredentialsContextProvider = ({
 
   useEffect(() => {
     updateCredentials();
-  });
+  }, []);
   return (
     <CredentialsContext.Provider value={credentials}>
       {children}
