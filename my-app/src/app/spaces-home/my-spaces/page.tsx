@@ -1,12 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
-import { S3Client } from "@aws-sdk/client-s3";
-import { fromCognitoIdentityPool } from "@aws-sdk/credential-providers";
-import config from "$AmplifyOutputs";
+import { CredentialsContext } from "@/app/context/CredentialsContext";
+import { useContext } from "react";
 import { GetCallerIdentityCommand, STSClient } from "@aws-sdk/client-sts";
-import { fetchAuthSession } from "aws-amplify/auth";
+import config from "$AmplifyOutputs";
 
 const MySpaces = () => {
+  const credentials = useContext(CredentialsContext);
+
   return <div>My Spaces Page</div>;
 };
 
