@@ -1,0 +1,17 @@
+.rootdiv {
+  background-color: mediumspringgreen;
+  height: 100vh;
+  position: relative;
+}
+
+.activelink {
+  background-color: brown;
+  padding: 10px 10px;
+  color: black;
+  text-decoration: none;
+}
+
+.navbarlink {
+  color: white;
+  text-decoration: none;
+}
