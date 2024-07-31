@@ -1,5 +1,5 @@
 const CreateSpacesPage = () => {
-  return <div>Spaces Home Page</div>;
+  return <div>Create Spaces Page</div>;
 };
 
 export default CreateSpacesPage;

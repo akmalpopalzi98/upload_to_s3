@@ -6,11 +6,13 @@ import styles from "./styles.module.css";
 
 export default function Home() {
   const router = useRouter();
-  const { signOut } = useAuthenticator();
+  const { signOut, user } = useAuthenticator();
   return (
     <Authenticator>
       <div className={styles.rootdiv}>
-        <h1 className={styles.header}>Welcome!</h1>
+        <h1 className={styles.header}>
+          Welcome {user?.signInDetails?.loginId}!
+        </h1>
         <h2 className={styles.subheader}>
           Press <strong>Enter</strong> to start using the app
         </h2>
@@ -20,7 +22,7 @@ export default function Home() {
             router.push("/spaces-home");
           }}
         >
-          Enter 😀{" "}
+          Enter 😀
         </button>
         <button className={styles.logout} onClick={() => signOut()}>
           sign out
