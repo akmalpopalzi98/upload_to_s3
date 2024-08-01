@@ -13,12 +13,6 @@ export const backend = defineBackend({
   storage,
 });
 
-backend.addOutput({
-  storage: {
-    bucket_name: backend.storage.resources.bucket.bucketName,
-  },
-});
-
 export type BackendType = typeof backend;
 
 new LambdaRestApiIntegration(backend, "LambdaIntergationStack");
