@@ -4,6 +4,7 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 import { CognitoIdentity } from "@aws-sdk/client-cognito-identity";
 import config from "$AmplifyOutputs";
 import assert from "assert";
+import { useAuthenticator, UseAuthenticator } from "@aws-amplify/ui-react";
 
 interface AWSCredentials {
   accessKeyId: string;
@@ -23,6 +24,7 @@ export const CredentialsContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
+  const { authStatus } = useAuthenticator((context) => [context.authStatus]);
   const [credentials, setCredentials] = useState<AWSCredentials | undefined>(
     undefined
   );
@@ -51,8 +53,8 @@ export const CredentialsContextProvider = ({
   };
 
   useEffect(() => {
-    updateCredentials();
-  }, []);
+    if (authStatus === "authenticated") updateCredentials();
+  }, [authStatus]);
   return (
     <CredentialsContext.Provider value={credentials}>
       {children}
