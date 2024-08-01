@@ -9,6 +9,10 @@ const MySpaces = () => {
   const credentials = useContext(CredentialsContext);
   const client = new S3Client({ credentials, region: config.auth.aws_region });
 
+  const objectUrls = objects?.map((obj) => {
+    return `https://${config.storage.bucket_name}.s3.amazonaws.com/${obj.Key}`;
+  });
+
   const getObjects = async () => {
     try {
       const objectsList = await client.send(
@@ -17,7 +21,6 @@ const MySpaces = () => {
         })
       );
       setObjects(objectsList.Contents);
-      console.log(objectsList);
     } catch (er) {
       console.log(er);
     }
