@@ -1,5 +1,5 @@
 import { defineBackend } from "@aws-amplify/backend";
-import { auth } from "./auth/resource";
+import { auth, AuthResources } from "./auth/resource";
 import { data } from "./data/resource";
 import {
   LambdaRestApiIntegration,
@@ -13,6 +13,14 @@ export const backend = defineBackend({
   storage,
 });
 
+backend.addOutput({
+  storage: {
+    bucket_name: backend.storage.resources.bucket.bucketName,
+  },
+});
+
 export type BackendType = typeof backend;
 
 new LambdaRestApiIntegration(backend, "LambdaIntergationStack");
+
+new AuthResources(backend, "AuthCongifStack");
