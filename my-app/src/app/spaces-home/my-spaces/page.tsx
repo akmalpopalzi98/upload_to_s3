@@ -36,6 +36,7 @@ const MySpaces = () => {
         })
       );
       const objectContentList = objectsList.Contents;
+      const expiresIn = 3;
       if (objectContentList) {
         const signedUrls = objectContentList.map((obj) => {
           return getSignedUrl(
