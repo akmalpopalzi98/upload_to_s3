@@ -24,7 +24,13 @@ export default function Home() {
         >
           Enter 😀
         </button>
-        <button className={styles.logout} onClick={() => signOut()}>
+        <button
+          className={styles.logout}
+          onClick={() => {
+            localStorage.removeItem("resolved_urls");
+            signOut();
+          }}
+        >
           sign out
         </button>
       </div>
