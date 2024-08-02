@@ -10,17 +10,26 @@ import {
 import config from "$AmplifyOutputs";
 import SpaceImage from "../components/SpaceImage";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import styles from "../styles.module.css";
+import RefreshUrlsButton from "../components/RefreshUrlsButton";
 
 const MySpaces = () => {
   const [urls, setUrls] = useState<string[] | undefined>(undefined);
   const credentials = useContext(CredentialsContext);
   const client = new S3Client({ credentials, region: config.auth.aws_region });
-  console.log(credentials);
+  const [refresh, setRefresh] = useState<boolean>(false);
+  console.log(refresh);
 
   const renderedImages = urls?.map((url) => <SpaceImage url={url} />);
 
   const getObjects = async () => {
+    const cachedUrls = localStorage.getItem("resolved_urls");
+    if (cachedUrls) {
+      setUrls(JSON.parse(cachedUrls));
+      return;
+    }
     try {
+      setRefresh(false);
       const objectsList = await client.send(
         new ListObjectsV2Command({
           Bucket: config.storage.bucket_name,
@@ -39,6 +48,7 @@ const MySpaces = () => {
         });
 
         const resolvedUrls = await Promise.all(signedUrls);
+        localStorage.setItem("resolved_urls", JSON.stringify(resolvedUrls));
         console.log(resolvedUrls);
         setUrls(resolvedUrls);
       } else {
@@ -50,9 +60,14 @@ const MySpaces = () => {
   };
   useEffect(() => {
     getObjects();
-  }, []);
+  }, [refresh]);
 
-  return <div>{renderedImages}</div>;
+  return (
+    <div className={styles.imageslistdiv}>
+      {renderedImages}
+      <RefreshUrlsButton className={styles.button} setRefresh={setRefresh} />
+    </div>
+  );
 };
 
 export default MySpaces;
