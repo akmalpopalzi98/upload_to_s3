@@ -1,5 +1,9 @@
 const CreateSpacesPage = () => {
-  return <div>Create Spaces Page</div>;
+  return (
+    <div>
+      <h2>Upload a file to create a space</h2>
+    </div>
+  );
 };
 
 export default CreateSpacesPage;
