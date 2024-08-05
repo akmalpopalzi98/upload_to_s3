@@ -1,18 +1,14 @@
-import { Dispatch, SetStateAction } from "react";
+"use client";
 
-const RefreshUrlsButton = ({
-  className,
-  setRefresh,
-}: {
-  className: string;
-  setRefresh: Dispatch<SetStateAction<boolean>>;
-}) => {
+import { clearCache } from "@/app/actions/actions";
+import styles from "../styles.module.css";
+
+const RefreshUrlsButton = () => {
   return (
     <button
-      className={className}
+      className={styles.button}
       onClick={() => {
-        localStorage.removeItem("resolved_urls");
-        setRefresh(true);
+        clearCache();
       }}
     >
       Refresh

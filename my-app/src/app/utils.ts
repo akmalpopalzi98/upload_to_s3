@@ -56,7 +56,7 @@ export async function AuthGetCredentials(): Promise<
 
 const CACHED_URLS_KEY = "s3Objects";
 const CACHED_TTL = 200;
-const cacheStore = new Map();
+export const cacheStore = new Map();
 
 export const getUrls = async (
   client: S3Client
