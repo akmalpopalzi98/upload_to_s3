@@ -64,10 +64,12 @@ export const getUrls = async (
   const now = Date.now();
   const cache = cacheStore.get(CACHED_URLS_KEY);
   if (cache && now - cache.timestamp < 1000 * CACHED_TTL) {
+    console.log("cached data");
     return cache.values;
   }
 
   try {
+    console.log("new api call");
     const objectsList = await client.send(
       new ListObjectsV2Command({
         Bucket: config.storage.bucket_name,
