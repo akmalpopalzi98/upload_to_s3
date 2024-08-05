@@ -54,7 +54,7 @@ export async function AuthGetCredentials(): Promise<
   }
 }
 
-export const getS3Objects = async (client: S3Client) => {
+export const getUrls = async (client: S3Client) => {
   try {
     const objectsList = await client.send(
       new ListObjectsV2Command({
