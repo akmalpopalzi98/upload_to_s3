@@ -54,7 +54,19 @@ export async function AuthGetCredentials(): Promise<
   }
 }
 
-export const getUrls = async (client: S3Client) => {
+const CACHED_URLS_KEY = "s3Objects";
+const CACHED_TTL = 200;
+const cacheStore = new Map();
+
+export const getUrls = async (
+  client: S3Client
+): Promise<string[] | undefined> => {
+  const now = Date.now();
+  const cache = cacheStore.get(CACHED_URLS_KEY);
+  if (cache && now - cache.timestamp < 1000 * CACHED_TTL) {
+    return cache.values;
+  }
+
   try {
     const objectsList = await client.send(
       new ListObjectsV2Command({
@@ -62,7 +74,6 @@ export const getUrls = async (client: S3Client) => {
       })
     );
     const objectContentList = objectsList.Contents;
-    const expiresIn = 3;
     if (objectContentList) {
       const signedUrls = objectContentList.map((obj) => {
         return getSignedUrl(
@@ -70,11 +81,13 @@ export const getUrls = async (client: S3Client) => {
           new GetObjectCommand({
             Bucket: config.storage.bucket_name,
             Key: obj.Key,
-          })
+          }),
+          { expiresIn: 3600 }
         );
       });
 
       const resolvedUrls = await Promise.all(signedUrls);
+      cacheStore.set(CACHED_URLS_KEY, { values: resolvedUrls, timestamp: now });
       return resolvedUrls;
     } else {
       throw new Error("No objects were found");
