@@ -31,3 +31,16 @@
   top: 10;
   right: 0;
 }
+
+.uploadimagediv {
+  display: flex;
+  gap: 20px;
+  margin: 0 auto;
+  margin-top: 20px;
+  border: solid black;
+  height: 500px;
+  width: 50%;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+}

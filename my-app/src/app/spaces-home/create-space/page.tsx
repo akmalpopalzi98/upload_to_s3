@@ -1,7 +1,10 @@
+import UploadImage from "../components/UploadImage";
+
 const CreateSpacesPage = () => {
   return (
     <div>
-      <h2>Upload a file to create a space</h2>
+      <h2 style={{ textAlign: "center" }}>Upload a file to create a space</h2>
+      <UploadImage />
     </div>
   );
 };
