@@ -27,7 +27,6 @@ export default function Home() {
         <button
           className={styles.logout}
           onClick={() => {
-            localStorage.removeItem("resolved_urls");
             signOut();
           }}
         >
