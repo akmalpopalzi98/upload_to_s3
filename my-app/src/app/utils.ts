@@ -21,7 +21,7 @@ interface AWSCredentials {
 
 interface CredentialsCache {
   value: AWSCredentials;
-  expiry: number; // Unix timestamp in milliseconds
+  expiry: number;
 }
 
 export const { runWithAmplifyServerContext } = createServerRunner({
@@ -36,6 +36,7 @@ const cognito = new CognitoIdentity({ region: config.auth.aws_region });
 export async function AuthGetCredentials(): Promise<
   AWSCredentials | undefined
 > {
+  console.log("-------credentials function called---------");
   const now = Date.now();
   const cache: CredentialsCache = credentialsCache.get(CACHED_CREDENTIALS_KEY);
 
@@ -47,6 +48,7 @@ export async function AuthGetCredentials(): Promise<
   }
   try {
     console.log("new credentials");
+
     const authSession = await runWithAmplifyServerContext({
       nextServerContext: { cookies },
       operation: (contextSpec) => fetchAuthSession(contextSpec),
@@ -87,8 +89,11 @@ export const cacheStore = new Map();
 export const getUrls = async (
   client: S3Client
 ): Promise<string[] | undefined> => {
+  console.log("-------url function called---------");
+
   const now = Date.now();
   const cache = cacheStore.get(CACHED_URLS_KEY);
+
   if (cache && now - cache.timestamp < 1000 * CACHED_TTL) {
     console.log("cached data");
     return cache.values;
