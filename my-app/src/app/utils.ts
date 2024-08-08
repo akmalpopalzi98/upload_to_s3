@@ -19,16 +19,34 @@ interface AWSCredentials {
   expiration?: Date;
 }
 
+interface CredentialsCache {
+  value: AWSCredentials;
+  expiry: number; // Unix timestamp in milliseconds
+}
+
 export const { runWithAmplifyServerContext } = createServerRunner({
   config,
 });
+
+const CACHED_CREDENTIALS_KEY = "credentials";
+const credentialsCache = new Map();
 
 const cognito = new CognitoIdentity({ region: config.auth.aws_region });
 
 export async function AuthGetCredentials(): Promise<
   AWSCredentials | undefined
 > {
+  const now = Date.now();
+  const cache: CredentialsCache = credentialsCache.get(CACHED_CREDENTIALS_KEY);
+
+  const difference = cache?.expiry / (1000 * 60) - now / (1000 * 60);
+
+  if (cache && now - difference > 5) {
+    console.log("returning cached credentials");
+    return cache.value;
+  }
   try {
+    console.log("new credentials");
     const authSession = await runWithAmplifyServerContext({
       nextServerContext: { cookies },
       operation: (contextSpec) => fetchAuthSession(contextSpec),
@@ -44,18 +62,26 @@ export async function AuthGetCredentials(): Promise<
 
     assert(credentialdetails.Credentials?.AccessKeyId, "No Access Key Id");
     assert(credentialdetails.Credentials?.SecretKey, " No session Token Found");
-    return {
+
+    const credentials = {
       accessKeyId: credentialdetails.Credentials?.AccessKeyId,
       secretAccessKey: credentialdetails.Credentials?.SecretKey,
       sessionToken: credentialdetails.Credentials?.SessionToken,
     };
+
+    credentialsCache.set(CACHED_CREDENTIALS_KEY, {
+      value: credentials,
+      expiry: credentialdetails.Credentials.Expiration?.getTime(),
+    });
+
+    return credentials;
   } catch (error) {
     console.error(error);
   }
 }
 
 const CACHED_URLS_KEY = "s3Objects";
-const CACHED_TTL = 200;
+const CACHED_TTL = 300;
 export const cacheStore = new Map();
 
 export const getUrls = async (
