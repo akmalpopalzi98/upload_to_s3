@@ -2,6 +2,7 @@
 import { ChangeEvent, useState } from "react";
 import styles from "../styles.module.css";
 import assert from "assert";
+import { sendImage } from "@/app/actions/actions";
 
 interface FileData {
   fileName: string;
@@ -10,7 +11,6 @@ interface FileData {
 }
 
 const UploadImage = () => {
-  const [fileContent, setFileContent] = useState<string | undefined>();
   const [fileUploadData, setFileUploadData] = useState<FileData | undefined>(
     undefined
   );
@@ -25,8 +25,19 @@ const UploadImage = () => {
       }}
     >
       <h4 style={{ textAlign: "center" }}>Image Preview</h4>
-      <img src={fileContent} alt="image-preview" width="400px" height="250px" />
-      <button>Upload</button>
+      <img
+        src={fileUploadData?.fileContent}
+        alt="image-preview"
+        width="400px"
+        height="250px"
+      />
+      <button
+        onClick={() => {
+          sendImage(fileUploadData);
+        }}
+      >
+        Upload
+      </button>
     </div>
   );
 
@@ -36,7 +47,11 @@ const UploadImage = () => {
     assert(files, "No files found");
 
     reader.onload = () => {
-      setFileContent(reader.result as string);
+      setFileUploadData({
+        fileName: files[0].name,
+        fileType: files[0].type,
+        fileContent: reader.result as string,
+      });
     };
     reader.readAsDataURL(files[0]);
     console.log(files);
@@ -46,7 +61,7 @@ const UploadImage = () => {
     <div className={styles.uploadimagediv}>
       <h3 style={{ textAlign: "center" }}>Choose File</h3>
       <input type="file" accept="image/*" onChange={handleLoadImage} />
-      {fileContent && PreviewImage}
+      {fileUploadData && PreviewImage}
     </div>
   );
 };

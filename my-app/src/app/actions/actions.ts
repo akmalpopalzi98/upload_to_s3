@@ -9,3 +9,7 @@ export const clearCache = () => {
   //   cacheStore.clear();
   revalidatePath("/spaces-home/my-spaces", "page");
 };
+
+export const sendImage = (data: any) => {
+  console.log(data);
+};
