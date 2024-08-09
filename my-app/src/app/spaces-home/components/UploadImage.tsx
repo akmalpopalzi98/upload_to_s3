@@ -33,7 +33,7 @@ const UploadImage = () => {
       />
       <button
         onClick={() => {
-          sendImage(fileUploadData);
+          sendImage("data");
         }}
       >
         Upload
@@ -45,7 +45,6 @@ const UploadImage = () => {
     let files = e.target.files;
     const reader = new FileReader();
     assert(files, "No files found");
-
     reader.onload = () => {
       setFileUploadData({
         fileName: files[0].name,
@@ -54,7 +53,6 @@ const UploadImage = () => {
       });
     };
     reader.readAsDataURL(files[0]);
-    console.log(files);
   };
 
   return (

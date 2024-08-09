@@ -20,5 +20,11 @@ export class LambdaRestApiIntegration extends AmplifyBackendConstruct {
 
     const pictures = restApi.root.addResource("pictures");
     pictures.addMethod("POST");
+
+    backend.addOutput({
+      custom: {
+        lambdaEndpoint: restApi.url,
+      },
+    });
   }
 }
