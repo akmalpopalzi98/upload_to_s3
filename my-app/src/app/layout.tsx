@@ -19,9 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AuthenticationProvider>
-        <CredentialsContextProvider>
-          <body className={inter.className}>{children}</body>
-        </CredentialsContextProvider>
+        {/* <CredentialsContextProvider> */}
+        <body className={inter.className}>{children}</body>
+        {/* </CredentialsContextProvider> */}
       </AuthenticationProvider>
     </html>
   );
