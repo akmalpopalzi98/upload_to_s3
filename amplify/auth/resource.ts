@@ -14,7 +14,7 @@ export class AuthResources extends AmplifyBackendConstruct {
     super(backend, id);
     backend.auth.resources.authenticatedUserIamRole.addToPrincipalPolicy(
       new PolicyStatement({
-        actions: ["s3:GetObject", "s3:ListBucket"],
+        actions: ["s3:GetObject", "s3:ListBucket", "s3:PuObject"],
         resources: [
           `${backend.storage.resources.bucket.bucketArn}/*`,
           backend.storage.resources.bucket.bucketArn,

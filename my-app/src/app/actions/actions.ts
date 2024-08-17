@@ -2,6 +2,7 @@
 import axios from "axios";
 import { revalidatePath } from "next/cache";
 import outputs from "$AmplifyOutputs";
+import { S3Client } from "@aws-sdk/client-s3";
 import Compressor from "compressorjs";
 
 const cacheStore = new Map();
