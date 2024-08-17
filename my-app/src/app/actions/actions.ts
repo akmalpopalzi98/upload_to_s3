@@ -16,7 +16,8 @@ export const clearCache = () => {
 
 export const sendImage = async (data: any) => {
   const response = await axios.post(
-    `${outputs.custom.lambdaEndpoint}/pictures`
+    `${outputs.custom.lambdaEndpoint}/presigned-url`,
+    data
   );
   console.log(response.data);
 };

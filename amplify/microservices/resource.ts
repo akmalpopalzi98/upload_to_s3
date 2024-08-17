@@ -1,13 +1,12 @@
 import { defineFunction } from "@aws-amplify/backend";
 import { AmplifyBackendConstruct } from "../AmplifyBackend";
-import { BackendType } from "../backend";
+import { backend, BackendType } from "../backend";
 import { LambdaRestApi } from "aws-cdk-lib/aws-apigateway";
+import { PolicyStatement } from "aws-cdk-lib/aws-iam";
 
 export const uploadToS3Function = defineFunction({
   entry: "./handler/index.ts",
 });
-
-// Make api private and only accessible if user is logged in to aws
 
 export class LambdaRestApiIntegration extends AmplifyBackendConstruct {
   constructor(backend: BackendType, id: string) {
@@ -18,7 +17,14 @@ export class LambdaRestApiIntegration extends AmplifyBackendConstruct {
       proxy: false,
     });
 
-    const pictures = restApi.root.addResource("pictures");
+    lambdaFunction.addToRolePolicy(
+      new PolicyStatement({
+        actions: ["s3:PutObject"],
+        resources: [`${backend.storage.resources.bucket.bucketArn}/*`],
+      })
+    );
+
+    const pictures = restApi.root.addResource("presigned-url");
     pictures.addMethod("POST");
 
     backend.addOutput({

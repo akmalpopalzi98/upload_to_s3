@@ -3,6 +3,7 @@ import { ChangeEvent, useState } from "react";
 import styles from "../styles.module.css";
 import assert from "assert";
 import { sendImage } from "@/app/actions/actions";
+import config from "$AmplifyOutputs";
 
 interface FileData {
   fileName: string;
@@ -14,6 +15,7 @@ const UploadImage = () => {
   const [fileUploadData, setFileUploadData] = useState<FileData | undefined>(
     undefined
   );
+  const [name, setName] = useState<string>("");
 
   const PreviewImage = (
     <div
@@ -31,9 +33,22 @@ const UploadImage = () => {
         width="400px"
         height="250px"
       />
+      <label>Save file as:</label>
+      <input
+        onChange={(e) => {
+          setName(e.target.value);
+          console.log(name);
+        }}
+        value={name}
+      />
       <button
         onClick={() => {
-          sendImage("data");
+          sendImage({
+            fileType: fileUploadData?.fileType,
+            fileName: name,
+            bucketName: config.storage.bucket_name,
+          });
+          setName("");
         }}
       >
         Upload

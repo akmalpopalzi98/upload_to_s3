@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^6.1.14",
+    "@aws-sdk/s3-request-presigner": "^3.621.0",
     "aws-amplify": "^6.4.3",
     "axios": "^1.7.3",
     "compressorjs": "^1.2.1"
