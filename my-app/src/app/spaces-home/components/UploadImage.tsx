@@ -2,13 +2,15 @@
 import { ChangeEvent, useState } from "react";
 import styles from "../styles.module.css";
 import assert from "assert";
-import { sendImage } from "@/app/actions/actions";
+import { sendImageUrl } from "@/app/actions/actions";
 import config from "$AmplifyOutputs";
+import axios from "axios";
 
 interface FileData {
   fileName: string;
   fileType: string;
   fileContent: string;
+  file: File;
 }
 
 const UploadImage = () => {
@@ -16,6 +18,23 @@ const UploadImage = () => {
     undefined
   );
   const [name, setName] = useState<string>("");
+  const [loadingStatus, setLoadingStatus] = useState(false);
+
+  const uploadImage = async () => {
+    try {
+      const url = await sendImageUrl({
+        fileType: fileUploadData?.fileType,
+        fileName: name,
+        bucketName: config.storage.bucket_name,
+      });
+      setName("");
+      setFileUploadData(undefined);
+      const response = await axios.put(url, fileUploadData?.file);
+      console.log(response.statusText);
+    } catch (err) {
+      console.error("Error uploading image:", err);
+    }
+  };
 
   const PreviewImage = (
     <div
@@ -41,18 +60,7 @@ const UploadImage = () => {
         }}
         value={name}
       />
-      <button
-        onClick={() => {
-          sendImage({
-            fileType: fileUploadData?.fileType,
-            fileName: name,
-            bucketName: config.storage.bucket_name,
-          });
-          setName("");
-        }}
-      >
-        Upload
-      </button>
+      <button onClick={uploadImage}>Upload</button>
     </div>
   );
 
@@ -65,6 +73,7 @@ const UploadImage = () => {
         fileName: files[0].name,
         fileType: files[0].type,
         fileContent: reader.result as string,
+        file: files[0],
       });
     };
     reader.readAsDataURL(files[0]);
