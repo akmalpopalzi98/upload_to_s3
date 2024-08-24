@@ -18,14 +18,14 @@ const SpacesNavBar = () => {
         height: "5%",
       }}
     >
-      <Link
+      {/* <Link
         className={
           pathname === "/spaces-home" ? styles.activelink : styles.navbarlink
         }
         href="/spaces-home"
       >
         Home
-      </Link>
+      </Link> */}
       <Link
         className={
           pathname === "/spaces-home/my-spaces"

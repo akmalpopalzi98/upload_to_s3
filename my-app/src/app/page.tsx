@@ -8,7 +8,20 @@ export default function Home() {
   const router = useRouter();
   const { signOut, user } = useAuthenticator();
   return (
-    <Authenticator>
+    <Authenticator
+      components={{
+        Header() {
+          return (
+            <div style={{ textAlign: "center", padding: "10px" }}>
+              <img
+                alt="Amplify image"
+                src="https://docs.amplify.aws/assets/logo-dark.svg"
+              />
+            </div>
+          );
+        },
+      }}
+    >
       <div className={styles.rootdiv}>
         <h1 className={styles.header}>
           Welcome {user?.signInDetails?.loginId}!
@@ -19,7 +32,7 @@ export default function Home() {
         <button
           className={styles.enter}
           onClick={() => {
-            router.push("/spaces-home");
+            router.push("/spaces-home/my-spaces");
           }}
         >
           Enter 😀
