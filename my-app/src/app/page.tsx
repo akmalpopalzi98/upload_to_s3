@@ -25,6 +25,9 @@ export default function Home() {
     >
       <Box className={styles.rootdiv}>
         <Title order={1} className={styles.header}>
+          Image Saver
+        </Title>
+        <Title order={2} className={styles.header}>
           Welcome {user?.signInDetails?.loginId}!
         </Title>
         <Title order={2} className={styles.subheader}>

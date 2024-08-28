@@ -1,5 +1,5 @@
 .rootdiv {
-  background-color: #dc7633;
+  background-image: linear-gradient(orange, blue);
   height: 100vh;
   padding-top: 1px;
   position: relative;
