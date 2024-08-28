@@ -1,5 +1,5 @@
 .rootdiv {
-  background-color: mediumspringgreen;
+  background-image: linear-gradient(pink, blue);
   height: 100vh;
   position: relative;
 }
@@ -43,4 +43,13 @@
   position: relative;
   flex-direction: column;
   align-items: center;
+}
+
+.loadingSpinner {
+  width: 100%;
+  height: 80%; /* Ensure it takes full height of the parent container */
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  text-align: center;
 }
