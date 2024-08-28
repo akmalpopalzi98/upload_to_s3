@@ -3,7 +3,7 @@ import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import { useRouter } from "next/navigation";
 import styles from "./styles.module.css";
-import { Box, Button } from "@mantine/core";
+import { Box, Button, Title } from "@mantine/core";
 
 export default function Home() {
   const router = useRouter();
@@ -24,12 +24,12 @@ export default function Home() {
       }}
     >
       <Box className={styles.rootdiv}>
-        <h1 className={styles.header}>
+        <Title order={1} className={styles.header}>
           Welcome {user?.signInDetails?.loginId}!
-        </h1>
-        <h2 className={styles.subheader}>
+        </Title>
+        <Title order={2} className={styles.subheader}>
           Press <strong>Enter</strong> to start using the app
-        </h2>
+        </Title>
         <Button
           className={styles.enter}
           onClick={() => {
