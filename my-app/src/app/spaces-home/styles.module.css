@@ -1,6 +1,7 @@
 .rootdiv {
   background-image: linear-gradient(pink, blue);
   height: 100vh;
+  padding: 1px;
   position: relative;
 }
 
