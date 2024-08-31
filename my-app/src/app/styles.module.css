@@ -1,5 +1,5 @@
 .rootdiv {
-  background-color: mediumspringgreen;
+  background-image: linear-gradient(orange, blue);
   height: 100vh;
   padding-top: 1px;
   position: relative;
@@ -21,33 +21,20 @@
   position: absolute;
   top: 5px;
   left: 5px;
-  background-color: #04aa6d; /* Green */
+  background-color: black; /* Green */
   border: solid black;
   color: white;
-  padding: 15px 32px;
   text-align: center;
   display: inline-block;
   font-size: 16px;
-}
-
-.logout:hover {
-  background-color: blue;
-  color: red;
-  cursor: pointer;
+  --button-hover: red;
 }
 
 .enter {
-  background-color: #045aaa; /* Green */
   border: solid black;
-  color: white;
-  padding: 15px 32px;
   text-align: center;
   display: inline-block;
   font-size: 16px;
   margin-top: 20px;
-}
-
-.enter:hover {
-  background-color: rgb(183, 0, 255);
-  cursor: pointer;
+  --button-hover: Green;
 }
