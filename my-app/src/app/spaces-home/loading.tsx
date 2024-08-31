@@ -1,13 +1,13 @@
 import { Box } from "@mantine/core";
 import { Loader } from "@mantine/core";
-import styles from "../styles.module.css";
+import styles from "./styles.module.css";
 
-const LoadingSpinner = () => {
+const LoadingSpinner2 = async () => {
   return (
     <Box className={styles.loadingSpinner}>
-      <Loader />
+      <Loader color="green" />
     </Box>
   );
 };
 
-export default LoadingSpinner;
+export default LoadingSpinner2;

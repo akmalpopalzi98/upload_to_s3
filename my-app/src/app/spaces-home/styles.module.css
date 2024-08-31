@@ -23,6 +23,7 @@
   border: solid black;
   height: 80%;
   position: relative;
+  justify-content: space-evenly;
 }
 
 .button {

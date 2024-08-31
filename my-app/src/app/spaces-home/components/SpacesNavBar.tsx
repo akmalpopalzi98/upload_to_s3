@@ -3,6 +3,7 @@
 import Link from "next/link";
 import styles from "../styles.module.css";
 import { usePathname } from "next/navigation";
+import { FaHome } from "react-icons/fa";
 
 const SpacesNavBar = () => {
   const pathname = usePathname();
@@ -18,21 +19,14 @@ const SpacesNavBar = () => {
         height: "5%",
       }}
     >
+      <Link href="/" className={styles.navbarlink}>
+        <FaHome />
+      </Link>
       <Link
         className={
           pathname === "/spaces-home" ? styles.activelink : styles.navbarlink
         }
-        href="/"
-      >
-        Home
-      </Link>
-      <Link
-        className={
-          pathname === "/spaces-home/my-spaces"
-            ? styles.activelink
-            : styles.navbarlink
-        }
-        href="/spaces-home/my-spaces"
+        href="/spaces-home"
       >
         My Spaces
       </Link>

@@ -36,7 +36,7 @@ export default function Home() {
         <Button
           className={styles.enter}
           onClick={() => {
-            router.push("/spaces-home/my-spaces");
+            router.push("/spaces-home");
           }}
         >
           Enter
