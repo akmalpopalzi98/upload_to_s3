@@ -3,44 +3,62 @@
 import Link from "next/link";
 import styles from "../styles.module.css";
 import { usePathname } from "next/navigation";
-import { FaHome } from "react-icons/fa";
+import { AppShell, Box, Burger, NavLink, Text, Title } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { FiAperture } from "react-icons/fi";
 
 const SpacesNavBar = () => {
   const pathname = usePathname();
+  const [opened, { toggle }] = useDisclosure(true);
   return (
-    <div
-      style={{
-        backgroundColor: "rgb(36, 63, 92)",
-        display: "flex",
-        justifyContent: "space-evenly",
-        alignItems: "center",
-        width: "100%",
-        color: "white",
-        height: "5%",
+    <AppShell
+      navbar={{
+        width: "150px",
+        breakpoint: 0,
+        collapsed: { desktop: !opened },
       }}
+      padding="md"
+      header={{ height: "60px" }}
     >
-      <Link href="/" className={styles.navbarlink}>
-        <FaHome />
-      </Link>
-      <Link
-        className={
-          pathname === "/spaces-home" ? styles.activelink : styles.navbarlink
-        }
-        href="/spaces-home"
+      <AppShell.Header
+        className={styles.appshellColor}
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
       >
-        My Spaces
-      </Link>
-      <Link
-        className={
-          pathname === "/spaces-home/create-space"
-            ? styles.activelink
-            : styles.navbarlink
-        }
-        href="/spaces-home/create-space"
-      >
-        Create Space
-      </Link>
-    </div>
+        <Burger
+          opened={opened}
+          onClick={toggle}
+          visibleFrom="sm"
+          size="sm"
+          color="gold"
+        />
+        <Box style={{ display: "flex" }}>
+          <FiAperture size={40} title="Picture" color="gold" />
+          <Title order={3} style={{ color: "gold" }}>
+            Image Saver
+          </Title>
+        </Box>
+      </AppShell.Header>
+      <AppShell.Navbar p="md" className={styles.appshellColor}>
+        <NavLink label="Home" component={Link} href="/" />
+        <NavLink
+          label="My Images"
+          component={Link}
+          href="/spaces-home"
+          active={pathname === "/spaces-home"}
+          color="green"
+        />
+        <NavLink
+          label="Create Image"
+          component={Link}
+          href="/spaces-home/create-space"
+          active={pathname === "/spaces-home/create-space"}
+          color="green"
+        />
+      </AppShell.Navbar>
+    </AppShell>
   );
 };
 

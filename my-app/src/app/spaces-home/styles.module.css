@@ -1,6 +1,7 @@
 .rootdiv {
   background-image: linear-gradient(pink, blue);
   height: 100vh;
+  padding: 1px;
   position: relative;
 }
 
@@ -12,14 +13,14 @@
 }
 
 .navbarlink {
-  color: white;
+  color: black;
   text-decoration: none;
 }
 
 .imageslistdiv {
   display: flex;
   gap: 20px;
-  margin: 30px;
+  margin: 70px 30px 0 30px;
   border: solid black;
   height: 80%;
   position: relative;
@@ -53,4 +54,8 @@
   justify-content: center; /* Centers horizontally */
   align-items: center; /* Centers vertically */
   text-align: center;
+}
+
+.appshellColor {
+  background-color: rgb(58, 27, 60);
 }
