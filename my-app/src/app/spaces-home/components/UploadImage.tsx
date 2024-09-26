@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import styles from "../styles.module.css";
 import assert from "assert";
 import { sendImageUrl } from "@/app/actions/actions";
@@ -14,11 +14,12 @@ interface FileData {
 }
 
 const UploadImage = () => {
+  const inputFile = useRef<HTMLInputElement | null>(null);
   const [fileUploadData, setFileUploadData] = useState<FileData | undefined>(
     undefined
   );
   const [name, setName] = useState<string>("");
-  const [loadingStatus, setLoadingStatus] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState<string | null>();
 
   const uploadImage = async () => {
     try {
@@ -61,6 +62,17 @@ const UploadImage = () => {
         value={name}
       />
       <button onClick={uploadImage}>Upload</button>
+      <button
+        onClick={() => {
+          const htmlInput = inputFile.current as HTMLInputElement;
+          if (inputFile.current) {
+            setFileUploadData(undefined);
+            inputFile.current.value = "";
+          }
+        }}
+      >
+        Clear
+      </button>
     </div>
   );
 
@@ -82,7 +94,12 @@ const UploadImage = () => {
   return (
     <div className={styles.uploadimagediv}>
       <h3 style={{ textAlign: "center" }}>Choose File</h3>
-      <input type="file" accept="image/*" onChange={handleLoadImage} />
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleLoadImage}
+        ref={inputFile}
+      />
       {fileUploadData && PreviewImage}
     </div>
   );
