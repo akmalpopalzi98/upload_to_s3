@@ -49,6 +49,7 @@ const SpacesNavBar = () => {
           href="/spaces-home"
           active={pathname === "/spaces-home"}
           color="green"
+          variant="filled"
         />
         <NavLink
           label="Create Image"
@@ -56,6 +57,7 @@ const SpacesNavBar = () => {
           href="/spaces-home/create-space"
           active={pathname === "/spaces-home/create-space"}
           color="green"
+          variant="filled"
         />
       </AppShell.Navbar>
     </AppShell>
