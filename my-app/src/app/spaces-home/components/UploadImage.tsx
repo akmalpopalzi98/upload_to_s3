@@ -2,13 +2,11 @@
 import { ChangeEvent, useRef, useState } from "react";
 import styles from "../styles.module.css";
 import assert from "assert";
-import { getImageUrl } from "@/app/actions/actions";
-import config from "$AmplifyOutputs";
-import axios from "axios";
-import { Progress } from "@mantine/core";
-import { Notification } from "@mantine/core";
+import PreviewImageUpload from "./PreviewImage";
+import NotificationAlert from "./NotificationAlert";
+import UploadProgress from "./UploadProgress";
 
-interface FileData {
+export interface FileDataInterface {
   fileName: string;
   fileType: string;
   fileContent: string;
@@ -17,116 +15,29 @@ interface FileData {
 
 const UploadImage = () => {
   const inputFile = useRef<HTMLInputElement | null>(null);
-  const [fileUploadData, setFileUploadData] = useState<FileData | undefined>(
-    undefined
-  );
+  const [fileUploadData, setFileUploadData] = useState<
+    FileDataInterface | undefined
+  >(undefined);
   const [name, setName] = useState<string>("");
   const [notification, setNotification] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
 
-  const uploadImage = async () => {
-    if (name) {
-      try {
-        const url = await getImageUrl({
-          fileType: fileUploadData?.fileType,
-          fileName: name,
-          bucketName: config.storage.bucket_name,
-        });
-        setName("");
-        const response = await axios.put(url, fileUploadData?.file, {
-          onUploadProgress(progressEvent) {
-            const progress =
-              (progressEvent.loaded / progressEvent.total!) * 100;
-            setProgress(progress);
-          },
-        });
-        setSuccess(true);
-        setFileUploadData(undefined);
-        console.log(response.statusText);
-      } catch (err) {
-        console.error("Error uploading image:", err);
-      }
-    } else {
-      setNotification("Please enter a name for the file");
-    }
-  };
-
-  const PreviewImage = (
-    <>
-      {progress === 0 && (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "10px",
-          }}
-        >
-          <h4 style={{ textAlign: "center" }}>Image Preview</h4>
-          <img
-            src={fileUploadData?.fileContent}
-            alt="image-preview"
-            width="400px"
-            height="250px"
-          />
-          <label>Save file as:</label>
-          <input
-            onChange={(e) => {
-              setName(e.target.value);
-              console.log(name);
-            }}
-            value={name}
-          />
-          <button onClick={uploadImage}>Upload</button>
-          <button
-            style={{ marginBottom: "20px" }}
-            onClick={() => {
-              if (inputFile.current) {
-                setFileUploadData(undefined);
-                inputFile.current.value = "";
-              }
-            }}
-          >
-            Clear
-          </button>
-        </div>
-      )}
-      {progress !== 0 && (
-        <>
-          <Progress
-            value={progress}
-            size="lg"
-            color="orange"
-            style={{ width: "230px" }}
-          />
-          {success && (
-            <Notification title="File has been uploaded!">
-              You can now view your new image
-            </Notification>
-          )}
-        </>
-      )}
-    </>
-  );
-
   if (success) {
     setTimeout(() => {
-      const file = inputFile.current as HTMLInputElement;
-      file.value = "";
-      setProgress(0);
+      // const file = inputFile.current as HTMLInputElement;
+      // file.value = "";
       setSuccess(false);
       setFileUploadData(undefined);
+      setProgress(0);
     }, 9000);
   }
 
   if (notification) {
     setTimeout(() => {
       setNotification(null);
-    }, 4000);
+    }, 8000);
   }
-
-  const notificationAlert = <div>{notification}</div>;
 
   const handleLoadImage = (e: ChangeEvent<HTMLInputElement>) => {
     let files = e.target.files;
@@ -145,15 +56,32 @@ const UploadImage = () => {
 
   return (
     <div className={styles.uploadimagediv}>
-      <h3 style={{ textAlign: "center" }}>Choose File</h3>
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleLoadImage}
-        ref={inputFile}
-      />
-      {inputFile.current?.value && PreviewImage}
-      {notificationAlert}
+      {progress == 0 ? (
+        <>
+          <h3 style={{ textAlign: "center" }}>Choose File</h3>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleLoadImage}
+            ref={inputFile}
+          />
+          {inputFile.current?.value && (
+            <PreviewImageUpload
+              setProgress={setProgress}
+              name={name}
+              fileUploadData={fileUploadData}
+              setName={setName}
+              setFileUploadData={setFileUploadData}
+              setNotification={setNotification}
+              setSuccess={setSuccess}
+              inputFile={inputFile}
+            />
+          )}
+          {notification && <NotificationAlert notification={notification} />}
+        </>
+      ) : (
+        <UploadProgress progress={progress} success={success} />
+      )}
     </div>
   );
 };
