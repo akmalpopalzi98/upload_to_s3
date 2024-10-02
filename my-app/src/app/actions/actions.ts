@@ -14,7 +14,7 @@ export const clearCache = () => {
   revalidatePath("/spaces-home/my-spaces", "page");
 };
 
-export const sendImageUrl = async (data: any): Promise<string> => {
+export const getImageUrl = async (data: any): Promise<string> => {
   try {
     const response = await axios.post(
       `${outputs.custom.lambdaEndpoint}/presigned-url`,
