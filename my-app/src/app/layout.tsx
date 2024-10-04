@@ -4,6 +4,7 @@ import "./globals.css";
 import { AuthenticationProvider } from "./components/Auth";
 import { ColorSchemeScript, createTheme, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
+import "@aws-amplify/ui-react/styles.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,11 +37,11 @@ export default function RootLayout({
         />
         <ColorSchemeScript />
       </head>
-      <AuthenticationProvider>
-        <body className={inter.className}>
-          <MantineProvider theme={theme}>{children}</MantineProvider>
-        </body>
-      </AuthenticationProvider>
+      <body>
+        <AuthenticationProvider>
+          <MantineProvider theme={theme}>{children} </MantineProvider>
+        </AuthenticationProvider>
+      </body>
     </html>
   );
 }

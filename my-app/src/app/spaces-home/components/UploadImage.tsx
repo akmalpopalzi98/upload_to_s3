@@ -25,8 +25,6 @@ const UploadImage = () => {
 
   if (success) {
     setTimeout(() => {
-      // const file = inputFile.current as HTMLInputElement;
-      // file.value = "";
       setSuccess(false);
       setFileUploadData(undefined);
       setProgress(0);
