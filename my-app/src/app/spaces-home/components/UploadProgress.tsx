@@ -25,7 +25,7 @@ const UploadProgress = ({
         <Progress value={progress} style={{ width: "200px" }} />
         <Text>{Math.round(progress)}%</Text>
       </div>
-      {success ? (
+      {Math.round(progress) == 100 ? (
         <Alert
           variant="filled"
           color={success ? "green" : "red"}

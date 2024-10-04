@@ -24,13 +24,6 @@ const UploadImage = () => {
   const [progress, setProgress] = useState<number>(0);
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
-  // if (success) {
-  //   setTimeout(() => {
-  //     setSuccess(false);
-  //     setFileUploadData(undefined);
-  //   }, 9000);
-  // }
-
   if (notification) {
     setTimeout(() => {
       setNotification(null);

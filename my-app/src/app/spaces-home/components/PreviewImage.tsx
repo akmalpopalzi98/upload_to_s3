@@ -1,8 +1,9 @@
-import { Dispatch, MutableRefObject, SetStateAction, useState } from "react";
+import { Dispatch, MutableRefObject, SetStateAction } from "react";
 import { FileDataInterface } from "./UploadImage";
 import { getImageUrl } from "@/app/actions/actions";
 import axios from "axios";
 import config from "$AmplifyOutputs";
+import { Button, Input } from "@mantine/core";
 
 interface PreviewImageProps {
   name: string;
@@ -75,15 +76,17 @@ const PreviewImageUpload = (props: PreviewImageProps) => {
         height="250px"
       />
       <label>Save file as:</label>
-      <input
+      <Input
         onChange={(e) => {
           setName(e.target.value);
           console.log(name);
         }}
         value={name}
       />
-      <button onClick={uploadImage}>Upload</button>
-      <button
+      <Button color="teal" onClick={uploadImage}>
+        Upload
+      </Button>
+      <Button
         style={{ marginBottom: "20px" }}
         onClick={() => {
           if (inputFile.current) {
@@ -93,7 +96,7 @@ const PreviewImageUpload = (props: PreviewImageProps) => {
         }}
       >
         Clear
-      </button>
+      </Button>
     </div>
   );
 };
