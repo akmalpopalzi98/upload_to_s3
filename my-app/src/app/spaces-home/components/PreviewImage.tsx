@@ -12,6 +12,7 @@ interface PreviewImageProps {
   inputFile: MutableRefObject<HTMLInputElement | null>;
   setSuccess: Dispatch<SetStateAction<boolean>>;
   setProgress: Dispatch<SetStateAction<number>>;
+  setIsUploading: Dispatch<SetStateAction<boolean>>;
 
   setNotification: Dispatch<SetStateAction<string | null>>;
 }
@@ -26,11 +27,13 @@ const PreviewImageUpload = (props: PreviewImageProps) => {
     setSuccess,
     setNotification,
     setProgress,
+    setIsUploading,
   } = props;
 
   const uploadImage = async () => {
     if (name) {
       try {
+        setIsUploading(true);
         const url = await getImageUrl({
           fileType: fileUploadData?.fileType,
           fileName: name,
@@ -49,6 +52,7 @@ const PreviewImageUpload = (props: PreviewImageProps) => {
         console.log(response.statusText);
       } catch (err) {
         console.error("Error uploading image:", err);
+        setSuccess(false);
       }
     } else {
       setNotification("Please enter a name for the file");

@@ -22,14 +22,14 @@ const UploadImage = () => {
   const [notification, setNotification] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
 
-  if (success) {
-    setTimeout(() => {
-      setSuccess(false);
-      setFileUploadData(undefined);
-      setProgress(0);
-    }, 9000);
-  }
+  // if (success) {
+  //   setTimeout(() => {
+  //     setSuccess(false);
+  //     setFileUploadData(undefined);
+  //   }, 9000);
+  // }
 
   if (notification) {
     setTimeout(() => {
@@ -54,7 +54,7 @@ const UploadImage = () => {
 
   return (
     <div className={styles.uploadimagediv}>
-      {progress == 0 ? (
+      {isUploading == false ? (
         <>
           <h3 style={{ textAlign: "center" }}>Choose File</h3>
           <input
@@ -73,12 +73,17 @@ const UploadImage = () => {
               setNotification={setNotification}
               setSuccess={setSuccess}
               inputFile={inputFile}
+              setIsUploading={setIsUploading}
             />
           )}
           {notification && <NotificationAlert notification={notification} />}
         </>
       ) : (
-        <UploadProgress progress={progress} success={success} />
+        <UploadProgress
+          progress={progress}
+          success={success}
+          setIsUploading={setIsUploading}
+        />
       )}
     </div>
   );
