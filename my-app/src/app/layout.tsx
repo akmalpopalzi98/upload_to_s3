@@ -39,7 +39,7 @@ export default function RootLayout({
       </head>
       <body>
         <AuthenticationProvider>
-          <MantineProvider theme={theme}>{children} </MantineProvider>
+          <MantineProvider theme={theme}>{children}</MantineProvider>
         </AuthenticationProvider>
       </body>
     </html>
