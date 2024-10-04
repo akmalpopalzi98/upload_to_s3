@@ -23,7 +23,7 @@ const UploadProgress = ({
     >
       <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
         <Progress value={progress} style={{ width: "200px" }} />
-        <Text>{progress}%</Text>
+        <Text>{Math.round(progress)}%</Text>
       </div>
       {success ? (
         <Alert
