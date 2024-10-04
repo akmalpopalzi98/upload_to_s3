@@ -12,5 +12,22 @@ export const AuthenticationProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  return <Authenticator.Provider>{children}</Authenticator.Provider>;
+  return (
+    <Authenticator
+      components={{
+        Header() {
+          return (
+            <div style={{ textAlign: "center", padding: "10px" }}>
+              <img
+                alt="Amplify image"
+                src="https://docs.amplify.aws/assets/logo-dark.svg"
+              />
+            </div>
+          );
+        },
+      }}
+    >
+      {children}
+    </Authenticator>
+  );
 };
