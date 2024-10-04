@@ -6,10 +6,12 @@ const UploadProgress = ({
   progress,
   success,
   setIsUploading,
+  setSuccess,
 }: {
   progress: number;
   success: boolean;
   setIsUploading: Dispatch<SetStateAction<boolean>>;
+  setSuccess: Dispatch<SetStateAction<boolean>>;
 }) => {
   return (
     <div
@@ -25,13 +27,14 @@ const UploadProgress = ({
         <Progress value={progress} style={{ width: "200px" }} />
         <Text>{Math.round(progress)}%</Text>
       </div>
-      {Math.round(progress) == 100 ? (
+      {success ? (
         <Alert
           variant="filled"
           color={success ? "green" : "red"}
           title={success ? "Upload Complete" : "Upload Failed"}
           withCloseButton
           onClose={() => {
+            setSuccess(false);
             setIsUploading(false);
           }}
         >

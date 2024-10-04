@@ -76,6 +76,7 @@ const UploadImage = () => {
           progress={progress}
           success={success}
           setIsUploading={setIsUploading}
+          setSuccess={setSuccess}
         />
       )}
     </div>
