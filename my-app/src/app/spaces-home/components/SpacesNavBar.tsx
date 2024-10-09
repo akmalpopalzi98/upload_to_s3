@@ -36,7 +36,7 @@ const SpacesNavBar = () => {
           size="sm"
           color="gold"
         />
-        <Box style={{ display: "flex" }}>
+        <Box style={{ display: "flex", marginRight: "20px" }}>
           <FiAperture size={40} title="Picture" color="gold" />
           <Title order={3} style={{ color: "gold" }}>
             Image Saver

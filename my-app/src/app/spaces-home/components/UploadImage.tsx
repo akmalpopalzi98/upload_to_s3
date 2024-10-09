@@ -31,7 +31,7 @@ const UploadImage = () => {
   }
 
   const handleLoadImage = (e: ChangeEvent<HTMLInputElement>) => {
-    let files = e.target.files;
+    let files = e.target.files!;
     const reader = new FileReader();
     assert(files, "No files found");
     reader.onload = () => {
