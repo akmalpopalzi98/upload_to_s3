@@ -5,6 +5,7 @@ import { AuthenticationProvider } from "./components/Auth";
 import { ColorSchemeScript, createTheme, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@aws-amplify/ui-react/styles.css";
+import QueryClientProvider from "./components/QueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,7 +40,9 @@ export default function RootLayout({
       </head>
       <body>
         <AuthenticationProvider>
-          <MantineProvider theme={theme}>{children}</MantineProvider>
+          <MantineProvider theme={theme}>
+            <QueryClientProvider>{children}</QueryClientProvider>
+          </MantineProvider>
         </AuthenticationProvider>
       </body>
     </html>
