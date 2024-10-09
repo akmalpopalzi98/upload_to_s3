@@ -1,8 +1,9 @@
-import { Dispatch, MutableRefObject, SetStateAction, useState } from "react";
+import { Dispatch, MutableRefObject, SetStateAction } from "react";
 import { FileDataInterface } from "./UploadImage";
 import { getImageUrl } from "@/app/actions/actions";
 import axios from "axios";
 import config from "$AmplifyOutputs";
+import { Button, Input } from "@mantine/core";
 
 interface PreviewImageProps {
   name: string;
@@ -12,6 +13,7 @@ interface PreviewImageProps {
   inputFile: MutableRefObject<HTMLInputElement | null>;
   setSuccess: Dispatch<SetStateAction<boolean>>;
   setProgress: Dispatch<SetStateAction<number>>;
+  setIsUploading: Dispatch<SetStateAction<boolean>>;
 
   setNotification: Dispatch<SetStateAction<string | null>>;
 }
@@ -26,11 +28,13 @@ const PreviewImageUpload = (props: PreviewImageProps) => {
     setSuccess,
     setNotification,
     setProgress,
+    setIsUploading,
   } = props;
 
   const uploadImage = async () => {
     if (name) {
       try {
+        setIsUploading(true);
         const url = await getImageUrl({
           fileType: fileUploadData?.fileType,
           fileName: name,
@@ -49,6 +53,7 @@ const PreviewImageUpload = (props: PreviewImageProps) => {
         console.log(response.statusText);
       } catch (err) {
         console.error("Error uploading image:", err);
+        setSuccess(false);
       }
     } else {
       setNotification("Please enter a name for the file");
@@ -71,15 +76,17 @@ const PreviewImageUpload = (props: PreviewImageProps) => {
         height="250px"
       />
       <label>Save file as:</label>
-      <input
+      <Input
         onChange={(e) => {
           setName(e.target.value);
           console.log(name);
         }}
         value={name}
       />
-      <button onClick={uploadImage}>Upload</button>
-      <button
+      <Button color="teal" onClick={uploadImage}>
+        Upload
+      </Button>
+      <Button
         style={{ marginBottom: "20px" }}
         onClick={() => {
           if (inputFile.current) {
@@ -89,7 +96,7 @@ const PreviewImageUpload = (props: PreviewImageProps) => {
         }}
       >
         Clear
-      </button>
+      </Button>
     </div>
   );
 };

@@ -22,14 +22,7 @@ const UploadImage = () => {
   const [notification, setNotification] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
-
-  if (success) {
-    setTimeout(() => {
-      setSuccess(false);
-      setFileUploadData(undefined);
-      setProgress(0);
-    }, 9000);
-  }
+  const [isUploading, setIsUploading] = useState<boolean>(false);
 
   if (notification) {
     setTimeout(() => {
@@ -38,7 +31,7 @@ const UploadImage = () => {
   }
 
   const handleLoadImage = (e: ChangeEvent<HTMLInputElement>) => {
-    let files = e.target.files;
+    let files = e.target.files!;
     const reader = new FileReader();
     assert(files, "No files found");
     reader.onload = () => {
@@ -54,7 +47,7 @@ const UploadImage = () => {
 
   return (
     <div className={styles.uploadimagediv}>
-      {progress == 0 ? (
+      {isUploading == false ? (
         <>
           <h3 style={{ textAlign: "center" }}>Choose File</h3>
           <input
@@ -73,12 +66,18 @@ const UploadImage = () => {
               setNotification={setNotification}
               setSuccess={setSuccess}
               inputFile={inputFile}
+              setIsUploading={setIsUploading}
             />
           )}
           {notification && <NotificationAlert notification={notification} />}
         </>
       ) : (
-        <UploadProgress progress={progress} success={success} />
+        <UploadProgress
+          progress={progress}
+          success={success}
+          setIsUploading={setIsUploading}
+          setSuccess={setSuccess}
+        />
       )}
     </div>
   );
